@@ -1,0 +1,21 @@
+{{>layouts/header}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">병원 이름</th>
+        <th scope="col">도로명 주소</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    {{#hospitals}}
+        <tr>
+            <th scope="row">{{id}}</th>
+            <td><a href="/lists/{{id}}">{{title}}</a></td>
+            <td>{{title}}</td>
+            <td>{{content}}</td>
+        </tr>
+    {{/hospitals}}
+    </tbody>
+</table>
+{{>layouts/footer}}
