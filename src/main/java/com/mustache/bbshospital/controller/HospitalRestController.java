@@ -3,6 +3,7 @@ package com.mustache.bbshospital.controller;
 import com.mustache.bbshospital.domain.entity.Hospital;
 import com.mustache.bbshospital.domain.dto.HospitalResponse;
 import com.mustache.bbshospital.repository.HospitalRepository;
+import com.mustache.bbshospital.service.HospitalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,16 +21,16 @@ import java.util.Optional;
 //API란? -> Json형식으로 데이터를 리턴해주는 서버 프로그램
 public class HospitalRestController {
 
-    private final HospitalRepository hospitalRepository;
+//    private final HospitalRepository hospitalRepository;
+    private final HospitalService hs;
 
-    public HospitalRestController(HospitalRepository hospitalRepository) {
-        this.hospitalRepository = hospitalRepository;
+    public HospitalRestController(HospitalService hs) {
+        this.hs = hs;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<HospitalResponse> get(@PathVariable Integer id) { //ResponseEntity도 DTO타입
-        Optional<Hospital> hospital = hospitalRepository.findById(id);
-        HospitalResponse hospitalResponse = Hospital.of(hospital.get());
+        HospitalResponse hospitalResponse = hs.getHospital(id);
         return ResponseEntity.ok().body(hospitalResponse);
     }
 }
