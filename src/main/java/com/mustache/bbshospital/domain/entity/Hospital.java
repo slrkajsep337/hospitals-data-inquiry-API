@@ -32,6 +32,7 @@ public class Hospital {
     private Integer totalNumberOfBeds;
     private String businessTypeName;
     private Float totalAreaSize;
+    private Integer businessStatusCode;
 
     public Hospital(String hospitalName, String roadNameAddress) {
         this.hospitalName = hospitalName;
