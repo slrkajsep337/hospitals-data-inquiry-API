@@ -1,4 +1,8 @@
 {{>layouts/header}}
+<form action="/hospitals/test" method="get">
+    지역 검색: <input type="text" name="keyword">
+</form>
+
 <table class="table">
     <thead>
     <tr>
@@ -18,4 +22,12 @@
     {{/hospitals}}
     </tbody>
 </table>
+{{#keyword}}
+    <a href="/hospitals/test?keyword={{keyword}}" class="card-link">이전 페이지</a>
+    <a href="/hospitals/test?keyword={{keyword}}" class="card-link">다음 페이지</a>
+{{/keyword}}
+{{^keyword}}
+    <a href="/hospitals/list?page={{previous}}" class="card-link">이전 페이지</a>
+    <a href="/hospitals/list?page={{next}}" class="card-link">다음 페이지</a>
+{{/keyword}}
 {{>layouts/footer}}
