@@ -11,8 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.transaction.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -39,6 +38,16 @@ public class HospitalController {
         return "boards/list";
     }
 
+    @GetMapping("/test")
+    public String listByRoadName(@RequestParam String keyword, Pageable pageable, Model model) {
+        Page<Hospital> hospitalPage = hr.findByRoadNameAddressContaining(keyword, pageable);
+        model.addAttribute("hospitals", hospitalPage);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+
+        model.addAttribute("keyword", keyword);
+        return "boards/list";
+    }
 
 
 }
