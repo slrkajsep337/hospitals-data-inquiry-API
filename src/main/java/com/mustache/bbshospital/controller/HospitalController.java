@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@RequestMapping("/hospitals")
+@RequestMapping("/api/v1/hospitals")
 public class HospitalController {
 
     private final HospitalRepository hr;
