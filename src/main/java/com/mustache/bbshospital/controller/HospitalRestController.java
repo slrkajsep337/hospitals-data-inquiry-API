@@ -1,38 +1,47 @@
 package com.mustache.bbshospital.controller;
 
-import com.mustache.bbshospital.domain.entity.Hospital;
 import com.mustache.bbshospital.domain.dto.HospitalResponse;
-import com.mustache.bbshospital.repository.HospitalRepository;
 import com.mustache.bbshospital.service.HospitalService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/api/v1/hospitals")  // /api/v1/을 붙여줌으로써 api기능을 한다는 암시를 준다.
-
-//RestController로 하고 싶은 것 -> 데이터를 제공 하는 것
-// UI를 통해 제공하는 것 x, JSON(OR XML) 형식으로 데이터를 제공 하는 것
-//JSON 형식으로 데이터를 제공 하려면? -> ResponseEntity<HospitalResponse(dto생략)> 이렇게 Return을 해주면 됩니다.
-//API란? -> Json형식으로 데이터를 리턴해주는 서버 프로그램
+@RequestMapping("/api/v1/hospitals")
+@RequiredArgsConstructor
 public class HospitalRestController {
 
-//    private final HospitalRepository hospitalRepository;
-    private final HospitalService hs;
+    private final HospitalService hospitalService;
 
-    public HospitalRestController(HospitalService hs) {
-        this.hs = hs;
-    }
+//    public HospitalRestController(HospitalService hospitalService) {
+//        this.hs = hs;
+//    }
 
+    /**
+     * 병/의원 정보 단건 조회
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<HospitalResponse> get(@PathVariable Integer id) { //ResponseEntity도 DTO타입
-        HospitalResponse hospitalResponse = hs.getHospital(id);
+    public ResponseEntity<HospitalResponse> get(@PathVariable Integer id) {
+        HospitalResponse hospitalResponse = hospitalService.getHospital(id);
         return ResponseEntity.ok().body(hospitalResponse);
     }
+
+    /**
+     * 병/의원 정보 전체 조회
+     */
+    @GetMapping(value = "/list")
+    public ResponseEntity<Page<HospitalResponse>> listHospital(@PageableDefault(size = 20) @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok().body(hospitalService.getHospitalList(pageable));
+    }
+
 }
 
 
