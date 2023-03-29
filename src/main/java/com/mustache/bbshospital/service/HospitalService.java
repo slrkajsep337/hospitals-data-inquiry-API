@@ -15,15 +15,16 @@ import java.util.Optional;
 public class HospitalService {
 
     @Autowired
-    HospitalRepository hr;
+    HospitalRepository hospitalRepository;
 
     @Transactional
-    public Page<Hospital> getHospitalList(Pageable pageable) {
-        return hr.findAll(pageable);
+    public Page<HospitalResponse> getHospitalList(Pageable pageable) {
+        Page<Hospital> hospitals = hospitalRepository.findAll(pageable);
+        return hospitals.map(hospital -> Hospital.of(hospital));
     }
 
     public HospitalResponse getHospital(Integer id) {
-        Optional<Hospital> optHospital = hr.findById(id); // Entity
+        Optional<Hospital> optHospital = hospitalRepository.findById(id); // Entity
         Hospital hospital = optHospital.get();
         HospitalResponse hospitalResponse = Hospital.of(hospital); // DTO
         if (hospital.getBusinessStatusCode() == 13) {
