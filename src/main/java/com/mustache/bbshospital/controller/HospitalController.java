@@ -10,44 +10,60 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
 
 @Controller
-@RequestMapping("/api/v1/hospitals")
+@RequestMapping("/hospitals")
 public class HospitalController {
 
-    private final HospitalRepository hr;
-    private final HospitalService hs;
+    private final HospitalRepository hospitalRepository;
 
-    public HospitalController(HospitalRepository hr, HospitalService hs) {
-        this.hr = hr;
-        this.hs = hs;
+    public HospitalController(HospitalRepository hospitalRepository) {
+        this.hospitalRepository = hospitalRepository;
     }
 
-    @GetMapping("")
-    public String blankToList() {
-        return "redirect:/hospitals/list";
-    }
-
-
+    /**
+     * 병/의원 정보 전체 조회
+     */
     @GetMapping("/list")
-    public String showList(Model model, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        model.addAttribute("hospitals", hs.getHospitalList(pageable));
-        return "boards/list";
-    }
+    public String showList(Model model, @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<Hospital> hospitals = hospitalRepository.findAll(pageable);
 
-    @GetMapping("/test")
-    public String listByRoadName(@RequestParam String keyword, Pageable pageable, Model model) {
-        Page<Hospital> hospitalPage = hr.findByRoadNameAddressContaining(keyword, pageable);
-        model.addAttribute("hospitals", hospitalPage);
+        model.addAttribute("hospitals", hospitals);
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
 
-        model.addAttribute("keyword", keyword);
         return "boards/list";
     }
+
+    /**
+     * 병/의원 정보 단건 조회
+     */
+    @GetMapping("/{hospitalId}")
+    public String getHospital(@PathVariable Integer hospitalId, Model model) {
+        Optional<Hospital> optionalHospital = hospitalRepository.findById(hospitalId);
+        if(optionalHospital.isPresent()) {
+            model.addAttribute("hospital", optionalHospital.get());
+            return "boards/show";
+        } else {
+            model.addAttribute("message", String.format("%d번의 병/의원을 찾을 수 없습니다.", hospitalId));
+            return "boards/error";
+        }
+    }
+
+//    @GetMapping("/test")
+//    public String listByRoadName(@RequestParam String keyword, Pageable pageable, Model model) {
+//        Page<Hospital> hospitalPage = hr.findByRoadNameAddressContaining(keyword, pageable);
+//        model.addAttribute("hospitals", hospitalPage);
+//        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+//        model.addAttribute("next", pageable.next().getPageNumber());
+//
+//        model.addAttribute("keyword", keyword);
+//        return "boards/list";
+//    }
 
 
 }
