@@ -38,7 +38,7 @@ public class HospitalRestController {
      * 병/의원 정보 전체 조회
      */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<HospitalResponse>> listHospital(@PageableDefault(size = 20) @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<HospitalResponse>> listHospital(@PageableDefault(size = 20) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.ok().body(hospitalService.getHospitalList(pageable));
     }
 
