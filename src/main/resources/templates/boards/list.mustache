@@ -15,19 +15,28 @@
     {{#hospitals}}
         <tr>
             <th scope="row">{{id}}</th>
-            <td><a href="/lists/{{id}}">{{title}}</a></td>
-            <td>{{title}}</td>
-            <td>{{content}}</td>
+            <td><a href="/hospitals/{{id}}">{{hospitalName}}</a></td>
+            <td>{{roadNameAddress}}</td>
         </tr>
     {{/hospitals}}
     </tbody>
 </table>
-{{#keyword}}
-    <a href="/hospitals/test?keyword={{keyword}}" class="card-link">이전 페이지</a>
-    <a href="/hospitals/test?keyword={{keyword}}" class="card-link">다음 페이지</a>
-{{/keyword}}
-{{^keyword}}
-    <a href="/hospitals/list?page={{previous}}" class="card-link">이전 페이지</a>
-    <a href="/hospitals/list?page={{next}}" class="card-link">다음 페이지</a>
-{{/keyword}}
+<ul class="pagination justify-content-center">
+    {{#keyword}}
+        <li class="page-item">
+            <a class="page-link" href="?page={{previous}}&keyword={{keyword}}">Previous</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{next}}&keyword={{keyword}}">Next</a>
+        </li>
+    {{/keyword}}
+    {{^keyword}}
+        <li class="page-item">
+            <a class="page-link" href="?page={{previous}}">Previous</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{next}}">Next</a>
+        </li>
+    {{/keyword}}
+</ul>
 {{>layouts/footer}}
