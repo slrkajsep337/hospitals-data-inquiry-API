@@ -1,6 +1,8 @@
 {{>layouts/header}}
-<form action="/hospitals/test" method="get">
-    지역 검색: <input type="text" name="keyword">
+<form action="/hospitals/search" method="get">
+    주소 검색: <input type="text" name="keyword">
+    <button type="submit" class="btn btn-primary">검색</button>
+    <a>도로명 주소로 입력해주세요(예: 서울특별시 종로구 지봉로 50, 3~5층 (숭인동))</a>
 </form>
 
 <table class="table">

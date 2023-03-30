@@ -17,9 +17,8 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
     List<Hospital> findByHospitalNameEndsWith(String roadNameAddresses); // 끝남
     List<Hospital> findByPatientRoomCountGreaterThanAndPatientRoomCountLessThan(int var1, int var2);
 
-
-    //list.mustache에서 input태그의 keword 값을 가져온다
     Page<Hospital> findByRoadNameAddressContaining(String keyword, Pageable pageable);
+    Page<Hospital> findByRoadNameAddressStartsWith(String roadNameAddresses, Pageable pageable); // 시작
 
 
 
