@@ -1,9 +1,11 @@
-# 🏥전국 병/의원 정보 사이트
-### 📍프로젝트 개요 
+# 🏥 전국 병/의원 정보 사이트
+## 📍 프로젝트 개요 
 - 전국 병/의원 정보 조회 및 검색이 가능한 서비스 
-### 🗓️개발 기간 
+
+## 🗓️ 개발 기간 
 - 22/11/11 ~
-### 🛠️Tech stacks
+
+## 🛠️ Tech stacks
 <div align="center">
 	<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white" />
     <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=Spring Boot&logoColor=white" />
