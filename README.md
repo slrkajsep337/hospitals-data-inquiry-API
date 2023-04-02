@@ -29,5 +29,5 @@
 </div>
 
 ## ⚙️ Endpoints (/api/v1/hospitals)
-<img src="img/hospital-endpoints.png" width="500" height="100">
+<img src="img/hospital-endpoints.png" width="500" height="120">
 
